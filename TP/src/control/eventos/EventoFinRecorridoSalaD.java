@@ -1,8 +1,8 @@
 package control.eventos;
 
-public class FinRecorridoSalaB extends Evento {
+public class EventoFinRecorridoSalaD extends Evento {
 
-    public FinRecorridoSalaB(String nombre) {
+    public EventoFinRecorridoSalaD(String nombre) {
         super(nombre);
     }
 

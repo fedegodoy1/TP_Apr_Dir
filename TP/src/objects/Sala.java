@@ -9,10 +9,11 @@ public class Sala {
     }
     
     private Estado estado;
+    private String nombre;
     private int capacidad;
     private int cola;
 
-    public Sala(Estado estado, int capacidad, int cola) {
+    public Sala(Estado estado, String nombre, int capacidad, int cola) {
         this.estado = estado;
         this.capacidad = capacidad;
         this.cola = cola;
@@ -22,6 +23,14 @@ public class Sala {
         return estado;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
