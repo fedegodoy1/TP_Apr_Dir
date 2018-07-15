@@ -169,6 +169,10 @@ public class VectorEstadoTableModel extends DefaultTableModel implements VectorE
         datos = modelo;
     }
     
+    public VectorEstadoUI getDato(int selectedRow) {
+        return datos.get(selectedRow);
+    }
+    
     public void setColumnsWidth(TableColumnModel columnModel) {
         for (int i = 0; i < columnModel.getColumnCount(); i++)
         {

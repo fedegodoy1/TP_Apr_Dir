@@ -84,24 +84,21 @@ public class ControladorSimulacion {
 
         if (anterior.getVisitantes() != null && anterior.getVisitantes().size() > 0) {
             for(Visitantes visitante : anterior.getVisitantes()) {
-                if(visitante.getFin_recorrido() > 0 &&
-                        visitante.getFin_recorrido() < Double.MAX_VALUE) {
-                    String sala = visitante.getSala().getNombre();
-                    switch (sala) {
-                        case "C":
-                            mapaDeTiempos.put(visitante.getFin_recorrido(), Evento.FinRecorridoSalaC);
-                            break;
-                        case "A":
-                            mapaDeTiempos.put(visitante.getFin_recorrido(), Evento.FinRecorridoSalaA);
-                            break;
-                        case "B":
-                            mapaDeTiempos.put(visitante.getFin_recorrido(), Evento.FinRecorridoSalaB);
-                            break;
-                        case "D":
-                            mapaDeTiempos.put(visitante.getFin_recorrido(), Evento.FinRecorridoSalaD);
-                            break;
-                    }
-                    
+                if(visitante.getFinRecorridoC().getFinRecorrido() > 0 &&
+                        visitante.getFinRecorridoC().getFinRecorrido() < Double.MAX_VALUE) {
+                    mapaDeTiempos.put(visitante.getFinRecorridoC().getFinRecorrido(), Evento.FinRecorridoSalaC);
+                }
+                if(visitante.getFinRecorridoA().getFinRecorrido() > 0 &&
+                        visitante.getFinRecorridoA().getFinRecorrido() < Double.MAX_VALUE) {
+                    mapaDeTiempos.put(visitante.getFinRecorridoA().getFinRecorrido(), Evento.FinRecorridoSalaA);
+                }
+                if(visitante.getFinRecorridoB().getFinRecorrido() > 0 &&
+                        visitante.getFinRecorridoB().getFinRecorrido() < Double.MAX_VALUE) {
+                    mapaDeTiempos.put(visitante.getFinRecorridoB().getFinRecorrido(), Evento.FinRecorridoSalaB);
+                }
+                if(visitante.getFinRecorridoD().getFinRecorrido() > 0 &&
+                        visitante.getFinRecorridoD().getFinRecorrido() < Double.MAX_VALUE) {
+                    mapaDeTiempos.put(visitante.getFinRecorridoD().getFinRecorrido(), Evento.FinRecorridoSalaD);
                 }
             }
         }

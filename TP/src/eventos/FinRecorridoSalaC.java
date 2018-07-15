@@ -6,14 +6,16 @@ import java.util.logging.Logger;
 public class FinRecorridoSalaC {
     private double rnd;
     private double tRecorrido;
+    private double finRecorrido;
 
     public FinRecorridoSalaC() {
-        rnd = tRecorrido = Double.MAX_VALUE;
+        rnd = tRecorrido = finRecorrido = Double.MAX_VALUE;
     }
     
-    public FinRecorridoSalaC(double rnd, double tRecorrido) {
+    public FinRecorridoSalaC(double rnd, double tRecorrido, double finRecorrido) {
         this.rnd = rnd;
         this.tRecorrido = tRecorrido;
+        this.finRecorrido = finRecorrido;
     }
 
     public double getRnd() {
@@ -31,11 +33,20 @@ public class FinRecorridoSalaC {
     public void settRecorrido(double tRecorrido) {
         this.tRecorrido = tRecorrido;
     }
+
+    public double getFinRecorrido() {
+        return finRecorrido;
+    }
+
+    public void setFinRecorrido(double finRecorrido) {
+        this.finRecorrido = finRecorrido;
+    }
     
     @Override
     public FinRecorridoSalaC clone() {
         try {
             FinRecorridoSalaC clon = (FinRecorridoSalaC) super.clone();
+            clon.finRecorrido = Double.MAX_VALUE;
             clon.rnd = Double.MAX_VALUE;
             clon.tRecorrido = Double.MAX_VALUE;
             return clon;
