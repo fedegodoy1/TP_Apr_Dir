@@ -2,7 +2,7 @@ package objects;
 
 public class Sala {
     
-    private enum Estado {
+    public enum Estado {
         VACIA,
         CON_VISITANTES,
         CAPACIDAD_MAXIMA

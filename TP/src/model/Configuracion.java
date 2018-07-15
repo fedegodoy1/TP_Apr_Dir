@@ -13,6 +13,7 @@ public class Configuracion {
     private double hastaFinRecorridoSalaC;    
     private double desdeFinRecorridoSalaD;    
     private double hastaFinRecorridoSalaD;    
+    private double mediaLote;
     
     private int minutosASimular;
     private int minutoDesde;
@@ -28,8 +29,9 @@ public class Configuracion {
         this.hastaFinRecorridoSalaC = 15;
         this.desdeFinRecorridoSalaD = 2;
         this.hastaFinRecorridoSalaD = 16;
+        this.mediaLote = 3;
         ///////////////////
-        this.minutosASimular = 120;
+        this.minutosASimular = 60000;
         this.minutoDesde = 0;
         this.iteracionesAMostrar = 1000000;
     }
@@ -136,6 +138,14 @@ public class Configuracion {
 
     public void setIteracionesAMostrar(int iteracionesAMostrar) {
         this.iteracionesAMostrar = iteracionesAMostrar;
+    }
+
+    public double getMediaLote() {
+        return mediaLote;
+    }
+
+    public void setMediaLote(double mediaLote) {
+        this.mediaLote = mediaLote;
     }
     
     public static Configuracion getConfiguracion() {

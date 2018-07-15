@@ -15,6 +15,22 @@ public abstract class Evento {
     {
         this.nombre = nombre;
     }
+
+    public double getHoraEvento() {
+        return horaEvento;
+    }
+
+    public void setHoraEvento(double horaEvento) {
+        this.horaEvento = horaEvento;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     
     public abstract void actualizarEstadoVector();
 }

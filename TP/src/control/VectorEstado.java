@@ -1,10 +1,12 @@
 package control;
 
 import control.eventos.Evento;
+import eventos.AsignacionLote;
 import eventos.LlegadaVisitantes;
 import java.util.List;
 import model.VectorEstadoUI;
 import objects.Sala;
+import objects.Visitantes;
 
 public class VectorEstado implements VectorEstadoUI {
 
@@ -15,6 +17,10 @@ public class VectorEstado implements VectorEstadoUI {
     private LlegadaVisitantes llegadaVisitantes;
 
     private List<Sala> salas;
+    
+    private List<Visitantes> visitantes;
+    
+    private AsignacionLote lote;
 
     private int acumuladorVisitantes;
 
@@ -72,5 +78,23 @@ public class VectorEstado implements VectorEstadoUI {
     @Override
     public int getMaxVisitantesEnEntrada() {
         return maxVisitantesEnEntrada;
+    }
+
+    @Override
+    public List<Visitantes> getVisitantes() {
+        return visitantes;
+    }
+
+    public void setVisitantes(List<Visitantes> visitantes) {
+        this.visitantes = visitantes;
+    }
+
+    @Override
+    public AsignacionLote getAsignacionLote() {
+        return lote;
+    }
+
+    public void setLote(AsignacionLote lote) {
+        this.lote = lote;
     }
 }
