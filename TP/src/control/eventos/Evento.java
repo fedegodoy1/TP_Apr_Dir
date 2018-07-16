@@ -1,5 +1,10 @@
 package control.eventos;
 
+import java.util.ArrayList;
+import java.util.List;
+import objects.Sala;
+import objects.Visitantes;
+
 public abstract class Evento {
     public static final Evento Inicial = new EventoInicial("Inicial");
     public static final Evento LlegadaVisitante = new EventoLlegadaVisitante("Llegada Visitante");
@@ -33,4 +38,20 @@ public abstract class Evento {
     }
     
     public abstract void actualizarEstadoVector();
+    
+    public static List<Visitantes> clonarVisitantes(List<Visitantes> listaAClonar) {
+        List<Visitantes> listaClonada = new ArrayList<>(listaAClonar.size());
+        for (Visitantes visitante : listaAClonar) {
+            listaClonada.add(visitante.clone());
+        }
+        return listaClonada;
+    }
+    
+    public static List<Sala> clonarSalas(List<Sala> listaAClonar) {
+        List<Sala> listaClonada = new ArrayList<>(listaAClonar.size());
+        for(Sala sala : listaAClonar) {
+            listaClonada.add(sala.clone());
+        }
+        return listaClonada;
+    }
 }

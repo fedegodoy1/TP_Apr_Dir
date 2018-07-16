@@ -80,7 +80,7 @@ public class PopUpVisitantes extends javax.swing.JFrame {
                         break;
                     }
                     case 1: {
-                        value = visitante.getAsignacion().getLoteVisitantes();
+                        value = visitante.getAsignacion().getSalas();
                         break;
                     }
                     case 2: {

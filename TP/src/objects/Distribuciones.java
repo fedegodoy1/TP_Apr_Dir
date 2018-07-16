@@ -29,16 +29,15 @@ public class Distribuciones {
         return (media * -1) * Math.log(1 - rnd);
     }
 
-    public static double calcular_poisson(double media) {
-        Random random = new Random();
-        float p = 0, randomValue = 0;
+    public static int calcular_poisson(double media, double rnd) {
+        double p = 0, randomValue = 0;
         int x = 0;
 
         double a = (double) Math.exp(((media) * -1));
         p = 1;
         x = -1;
         do {
-            randomValue = random.nextFloat();
+            randomValue = rnd;
             p = p * randomValue;
             x = x + 1;
         } while (p >= a);

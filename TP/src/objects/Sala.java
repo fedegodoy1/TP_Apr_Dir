@@ -1,6 +1,9 @@
 package objects;
 
-public class Sala {
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class Sala implements Cloneable{
     
     public enum Estado {
         VACIA,
@@ -13,6 +16,9 @@ public class Sala {
     private int capacidad;
     private int cola;
 
+    public Sala() {
+    }
+    
     public Sala(Estado estado, String nombre, int capacidad, int cola) {
         this.estado = estado;
         this.capacidad = capacidad;
@@ -51,4 +57,22 @@ public class Sala {
         this.cola = cola;
     }
     
+    public void agregarVisitanteALaCola() {
+        cola ++;
+    }
+    
+    @Override
+    public Sala clone() {
+        try {
+            Sala clon = (Sala) super.clone();
+            clon.capacidad = this.capacidad;
+            clon.cola = this.cola;
+            clon.estado = this.estado;
+            clon.nombre = this.nombre;
+            return clon;
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Sala.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new Sala();
+    }
 }

@@ -148,6 +148,7 @@ public class VectorEstadoTableModel extends DefaultTableModel implements VectorE
         columns.add(new Columna("RND: Llegada visitantes", Double.class, 50));
         columns.add(new Columna("Tiempo: Llegada de visitantes", Double.class, 50));
         columns.add(new Columna("Proxima Llegada de visitantes", Double.class, 60));
+        columns.add(new Columna("RND: cantidad en lote", Double.class, 60));
         columns.add(new Columna("Lote de visitantes", Integer.class, 50));
         columns.add(new Columna("Estado Sala C", String.class, 100));
         columns.add(new Columna("Capacidad Sala C", Integer.class, 75));

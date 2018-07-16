@@ -6,11 +6,17 @@
 package front;
 
 import control.ControladorSimulacion;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import model.Configuracion;
 import model.VectorEstadoUI;
 import objects.Visitantes;
 
@@ -27,8 +33,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     public VentanaPrincipal(ControladorSimulacion controlador) {
         this.controlador = controlador;
+        popUpVisitantes = new PopUpVisitantes();
         initComponents();
         crearTabla();
+        setearModeloDeTextos();
+        btn_set_valores_por_defectoActionPerformed(null);
     }
 
     /**
@@ -104,8 +113,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jsp_vector = new javax.swing.JScrollPane();
         jLabel34 = new javax.swing.JLabel();
         btn_simular = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_set_valores_por_defecto = new javax.swing.JButton();
+        btn_show_visitantes_table = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -597,10 +606,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jTabbedPane1.addTab("Vector Estado", jpn_vector);
 
         btn_simular.setText("Simular");
+        btn_simular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simularActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Setear valores por defecto");
+        btn_set_valores_por_defecto.setText("Setear valores por defecto");
+        btn_set_valores_por_defecto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_set_valores_por_defectoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Mostrar tabla visitantes");
+        btn_show_visitantes_table.setText("Mostrar tabla visitantes");
+        btn_show_visitantes_table.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_show_visitantes_tableActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -613,9 +637,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btn_show_visitantes_table)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btn_set_valores_por_defecto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_simular)))
                 .addContainerGap())
@@ -630,18 +654,45 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_simular)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btn_set_valores_por_defecto)
+                    .addComponent(btn_show_visitantes_table))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_simularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simularActionPerformed
+        model.setDatos(new ArrayList<>());
+        controlador.simular();
+        SwingUtilities.invokeLater( () -> { jTabbedPane1.setSelectedIndex(1);});
+    }//GEN-LAST:event_btn_simularActionPerformed
+
+    private void btn_set_valores_por_defectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_set_valores_por_defectoActionPerformed
+        Configuracion config = Configuracion.getConfiguracionPorDefecto();
+        txt_tiempo_a_simular.setText(""+config.getMinutosASimular());
+        txt_minuto_mostrar_desde.setText(""+config.getMinutoDesde());
+        txt_it_a_mostrar.setText(""+config.getIteracionesAMostrar());
+        txt_desde_sala_c.setText(""+config.getDesdeFinRecorridoSalaC());
+        txt_hasta_sala_c.setText(""+config.getHastaFinRecorridoSalaC());
+        txt_desde_sala_d.setText(""+config.getDesdeFinRecorridoSalaD());
+        txt_hasta_sala_d.setText(""+config.getHastaFinRecorridoSalaD());
+        txt_media_asig_recorrido.setText(""+config.getMediaLote());
+        txt_media_llegada_visitantes.setText(""+config.getMediaLlegadaVisitantes());
+        txt_media_sala_a.setText(""+config.getMediaFinRecorridoSalaA());
+        txt_desv_sala_A.setText(""+config.getDesviacionFinRecorridoSalaA());
+        txt_media_sala_b.setText(""+config.getMediaFinRecorridoSalaB());
+        txt_desviacion_sala_b.setText(""+config.getDesviacionFinRecorridoSalaB());
+    }//GEN-LAST:event_btn_set_valores_por_defectoActionPerformed
+
+    private void btn_show_visitantes_tableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_show_visitantes_tableActionPerformed
+        popUpVisitantes.setVisible(true);
+    }//GEN-LAST:event_btn_show_visitantes_tableActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_set_valores_por_defecto;
+    private javax.swing.JButton btn_show_visitantes_table;
     private javax.swing.JButton btn_simular;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -707,6 +758,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txt_tiempo_a_simular;
     // End of variables declaration//GEN-END:variables
 
+    private void setearModeloDeTextos() { 
+        DoubleInputVerifier doubleVer = new DoubleInputVerifier();
+        txt_media_asig_recorrido.setInputVerifier(doubleVer);
+        txt_media_llegada_visitantes.setInputVerifier(doubleVer);
+        txt_desde_sala_c.setInputVerifier(doubleVer);
+        txt_hasta_sala_c.setInputVerifier(doubleVer);
+        txt_desde_sala_d.setInputVerifier(doubleVer);
+        txt_media_sala_a.setInputVerifier(doubleVer);
+        txt_desv_sala_A.setInputVerifier(doubleVer);
+        txt_media_sala_b.setInputVerifier(doubleVer);
+        txt_desviacion_sala_b.setInputVerifier(doubleVer);
+        IntegerInputVerifier intVer = new IntegerInputVerifier();
+        txt_it_a_mostrar.setInputVerifier(intVer);
+        txt_minuto_mostrar_desde.setInputVerifier(intVer);
+        txt_tiempo_a_simular.setInputVerifier(intVer);
+    }
+    
     public void setearModelo(List<VectorEstadoUI> modelo) {
         model.setDatos(modelo);
         model.fireTableDataChanged();
@@ -745,5 +813,85 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 popUpVisitantes.setVisitantes(visitantes);
             }
         });
+    }
+    
+    private class DoubleInputVerifier extends InputVerifier {
+        @Override
+        public boolean verify(JComponent input) {
+            if (input instanceof JTextField)
+            {
+                JTextField txt = (JTextField) input;
+                try
+                {
+                    Double val = obtenerValorDeCampo(txt);
+
+                    if (val > 0)
+                    {
+                        return true;
+                    }
+                }
+                catch (NumberFormatException nfe)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+        @Override
+        public boolean shouldYieldFocus(JComponent input)
+        {
+            return true;
+        }
+    }
+    
+    private Double obtenerValorDeCampo(JTextField txt) {
+        String entrada = txt.getText();
+        if (entrada != null && !entrada.isEmpty())
+        {
+            return Double.parseDouble(entrada);
+        }
+        throw new NumberFormatException(entrada);
+    }
+    
+    private class IntegerInputVerifier extends InputVerifier
+    {
+
+        @Override
+        public boolean verify(JComponent input) {
+            if (input instanceof JTextField)
+            {
+                JTextField txt = (JTextField) input;
+                try
+                {
+                    Integer val = obtenerValorDeCampoEnInt(txt);
+
+                    if (val > 0)
+                    {
+                        return true;
+                    }
+                }
+                catch (NumberFormatException nfe)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+        
+        @Override
+        public boolean shouldYieldFocus(JComponent input)
+        {
+            return true;
+        }
+    }
+    
+    private Integer obtenerValorDeCampoEnInt(JTextField txt)
+    {
+        String entrada = txt.getText();
+        if (entrada != null && !entrada.isEmpty())
+        {
+            return Integer.parseInt(entrada);
+        }
+        throw new NumberFormatException(entrada);
     }
 }

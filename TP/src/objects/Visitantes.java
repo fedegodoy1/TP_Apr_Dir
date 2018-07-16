@@ -1,6 +1,7 @@
 package objects;
 
 import eventos.AsignacionLote;
+import eventos.AsignacionRecorrido;
 import eventos.FinRecorridoSalaA;
 import eventos.FinRecorridoSalaB;
 import eventos.FinRecorridoSalaC;
@@ -13,7 +14,7 @@ public class Visitantes implements Cloneable {
     
     private Sala sala;
     
-    private enum Estado {
+    public enum Estado {
         ESPERANDO_RECORRIDO_A,
         ESPERANDO_RECORRIDO_B,
         ESPERANDO_RECORRIDO_C,
@@ -25,21 +26,22 @@ public class Visitantes implements Cloneable {
     }
     private Estado estado;
     private List<Sala> recorrido;
-    private AsignacionLote asignacion;
+    private AsignacionRecorrido asignacion;
     private FinRecorridoSalaA finRecorridoA;
     private FinRecorridoSalaB finRecorridoB;
     private FinRecorridoSalaC finRecorridoC;
     private FinRecorridoSalaD finRecorridoD;
 
     public Visitantes() {
-        asignacion = new AsignacionLote();
+        asignacion = new AsignacionRecorrido();
         finRecorridoA = new FinRecorridoSalaA();
         finRecorridoB  = new FinRecorridoSalaB();
         finRecorridoC = new FinRecorridoSalaC();
         finRecorridoD = new FinRecorridoSalaD();
     }
 
-    public Visitantes(Sala sala, Estado estado, List<Sala> recorrido, AsignacionLote asignacion, FinRecorridoSalaA finRecorridoA, FinRecorridoSalaB finRecorridoB, FinRecorridoSalaC finRecorridoC, FinRecorridoSalaD finRecorridoD) {
+    public Visitantes(Sala sala, Estado estado, List<Sala> recorrido, AsignacionRecorrido asignacion, 
+            FinRecorridoSalaA finRecorridoA, FinRecorridoSalaB finRecorridoB, FinRecorridoSalaC finRecorridoC, FinRecorridoSalaD finRecorridoD) {
         this.sala = sala;
         this.estado = estado;
         this.recorrido = recorrido;
@@ -74,11 +76,11 @@ public class Visitantes implements Cloneable {
         this.recorrido = recorrido;
     }
 
-    public AsignacionLote getAsignacion() {
+    public AsignacionRecorrido getAsignacion() {
         return asignacion;
     }
 
-    public void setAsignacion(AsignacionLote asignacion) {
+    public void setAsignacion(AsignacionRecorrido asignacion) {
         this.asignacion = asignacion;
     }
 
