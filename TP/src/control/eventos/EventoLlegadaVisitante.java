@@ -49,10 +49,6 @@ public class EventoLlegadaVisitante extends Evento {
             newLoteVisitantes.add(new Visitantes());
         }
 
-        for (Visitantes newVisitante : newLoteVisitantes) {
-            actual.getVisitantes().add(newVisitante);
-        }
-
         double rndAsignacionRecorrido = 0.0;
 
         double rndFinRecorrido = 0.0;

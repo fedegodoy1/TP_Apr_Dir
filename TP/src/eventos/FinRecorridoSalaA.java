@@ -2,15 +2,19 @@ package eventos;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static objects.Distribuciones.COS;
+import static objects.Distribuciones.SENO;
 
 public class FinRecorridoSalaA implements Cloneable {
     private double rnd1;
     private double rnd2;
     private double tRecorrido;
     private double finRecorrido;
+    private String senocoseno;
 
     public FinRecorridoSalaA() {
         rnd1 = rnd2 = tRecorrido = finRecorrido = Double.MAX_VALUE;
+        senocoseno = COS;
     }
 
     public FinRecorridoSalaA(double rnd1, double rnd2, double tRecorrido, double finRecorrido) {
@@ -52,14 +56,24 @@ public class FinRecorridoSalaA implements Cloneable {
         this.tRecorrido = tRecorrido;
     }
 
+    public String getSenocoseno() {
+        return senocoseno;
+    }
+
+    public void setSenocoseno(String senocoseno) {
+        this.senocoseno = senocoseno;
+    }
+    
+    
     @Override
     public FinRecorridoSalaA clone() {
         try {
             FinRecorridoSalaA clon = (FinRecorridoSalaA) super.clone();
             clon.finRecorrido = Double.MAX_VALUE;
-            clon.rnd1 = Double.MAX_VALUE;
-            clon.rnd2 = Double.MAX_VALUE;
+            clon.rnd1 = this.rnd1;
+            clon.rnd2 = this.rnd2;
             clon.tRecorrido = Double.MAX_VALUE;
+            clon.senocoseno = this.senocoseno;
             return clon;
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(FinRecorridoSalaA.class.getName()).log(Level.SEVERE, null, ex);

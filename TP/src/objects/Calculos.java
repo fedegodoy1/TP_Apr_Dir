@@ -33,4 +33,8 @@ public class Calculos {
         } 
         return null;
     }
+    
+    public static List<Sala> setearRecorrido() {
+        
+    }
 }
