@@ -32,32 +32,32 @@ public class EventoFinRecorridoSalaD extends Evento {
         double finRecorridoD = 0.0;
 
         double horaActual = actual.getReloj();
-        Visitantes visitanteTerminoDeRecorrer = null;
+        Visitantes visitanteTerminoDeRecorrerSalaD = null;
         for (Visitantes visitante : actual.getVisitantes()) {
             if (horaActual == visitante.getFinRecorridoD().getFinRecorrido()) {
-                visitanteTerminoDeRecorrer = visitante;
+                visitanteTerminoDeRecorrerSalaD = visitante;
                 break;
             }
         }
 
         List<Visitantes> visitantesActuales = clonarVisitantes(anterior.getVisitantes());
-        visitantesActuales.remove(visitanteTerminoDeRecorrer);
-        visitanteTerminoDeRecorrer = null;
+        visitantesActuales.remove(visitanteTerminoDeRecorrerSalaD);
+        visitanteTerminoDeRecorrerSalaD = null;
         actual.setVisitantes(visitantesActuales);
         actual.getSalas().get(3).setCapacidad(actual.getSalas().get(3).getCapacidad() - 1);
 
         if (actual.getSalas().get(3).getCola() > 0 && actual.getSalas().get(3).getCapacidad() < 100) {
             actual.getSalas().get(3).setEstado(Sala.Estado.CON_VISITANTES);
-            Visitantes visitanteARecorrerSalaD = new Visitantes();
+            Visitantes visitanteQueRecorreSalaD = new Visitantes();
 
             for (Visitantes visitante : actual.getVisitantes()) {
                 if (visitante.getEstado().equals(Visitantes.Estado.ESPERANDO_RECORRIDO_D)) {
-                    visitanteARecorrerSalaD = visitante;
+                    visitanteQueRecorreSalaD = visitante;
                     break;
                 }
             }
 
-            visitanteARecorrerSalaD.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_D);
+            visitanteQueRecorreSalaD.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_D);
 
             rndFinRecorridoD = randomObject.nextDouble();
             tRecorridoD = Distribuciones.calcular_uniforme(config.getDesdeFinRecorridoSalaC(),
@@ -65,13 +65,13 @@ public class EventoFinRecorridoSalaD extends Evento {
                     rndFinRecorridoD);
             finRecorridoD = tRecorridoD + horaActual;
             FinRecorridoSalaD newFinRecorridoD = new FinRecorridoSalaD(rndFinRecorridoD, tRecorridoD, finRecorridoD);
-            visitanteTerminoDeRecorrer.setFinRecorridoD(newFinRecorridoD);
+            visitanteTerminoDeRecorrerSalaD.setFinRecorridoD(newFinRecorridoD);
             actual.getSalas().get(3).setCapacidad(actual.getSalas().get(3).getCapacidad() + 1);
             if (actual.getSalas().get(3).getCapacidad() == 100) {
                 actual.getSalas().get(3).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
             }
         } else {
-            visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_D);
+            visitanteTerminoDeRecorrerSalaD.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_D);
             actual.getSalas().get(3).agregarVisitanteALaCola();
         }
     }

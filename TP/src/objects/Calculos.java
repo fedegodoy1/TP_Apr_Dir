@@ -6,21 +6,15 @@ import java.util.List;
 
 public class Calculos {
     
-    public static List<String> calcularAsignacionDeRecorrido(double rnd) {
-        List<String> recorridoCompleto = new ArrayList();
-        recorridoCompleto.add("C");
-        recorridoCompleto.add("A");
-        recorridoCompleto.add("B");
-        recorridoCompleto.add("D");
+    public static List<Sala> calcularAsignacionDeRecorrido(double rnd, List<Sala> salas) {
+        List<Sala> recorridoCompleto = clonarSalas(salas);
         
-        List<String> recorridoMedio = new ArrayList();
-        recorridoMedio.add("C");
-        recorridoMedio.add("A");
-        recorridoMedio.add("D");
+        List<Sala> recorridoMedio = clonarSalas(salas);
+        recorridoMedio.remove(2);
         
-        List<String> recorridoCorto = new ArrayList();
-        recorridoCorto.add("C");
-        recorridoCorto.add("D");
+        List<Sala> recorridoCorto = clonarSalas(salas);
+        recorridoCorto.remove(2);
+        recorridoCorto.remove(1);
         
         if(rnd >= 0.0 && rnd <= 0.59) {
             return recorridoCorto;
@@ -34,7 +28,11 @@ public class Calculos {
         return null;
     }
     
-    public static List<Sala> setearRecorrido() {
-        
+    private static List<Sala> clonarSalas(List<Sala> listaAClonar) {
+        List<Sala> listaClonada = new ArrayList<>(listaAClonar.size());
+        for(Sala sala : listaAClonar) {
+            listaClonada.add(sala.clone());
+        }
+        return listaClonada;
     }
 }

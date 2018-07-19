@@ -37,7 +37,7 @@ public class EventoLlegadaVisitante extends Evento {
         AsignacionRecorrido newAsignacionRecorrido = new AsignacionRecorrido();
         List<Visitantes> newLoteVisitantes = new ArrayList();
 
-        double rndLote = 0.0;
+        double rndLote = randomObject.nextDouble();
         int lote = 0;
         lote = Distribuciones.calcular_poisson(config.getMediaLote(), rndLote);
         newAsignacionLote.setRnd(rndLote);
@@ -69,12 +69,22 @@ public class EventoLlegadaVisitante extends Evento {
         for (Visitantes newVisitante : newLoteVisitantes) {
 
             rndAsignacionRecorrido = randomObject.nextDouble();
+            List<Sala> recorridoSalas = Calculos.calcularAsignacionDeRecorrido(rndAsignacionRecorrido, actual.getSalas());
+            String recorridoSalasString = "";
+            for(Sala sala : recorridoSalas) {
+                if(!recorridoSalasString.equals("")) {
+                    recorridoSalasString = recorridoSalasString + ", " + sala.getNombre();
+                } else {
+                    recorridoSalasString = "" + sala.getNombre();
+                }
+            }
             newAsignacionRecorrido.setRnd(rndAsignacionRecorrido);
-            newAsignacionRecorrido.setSalas(Calculos.calcularAsignacionDeRecorrido(rndAsignacionRecorrido).toString());
+            newAsignacionRecorrido.setSalas(recorridoSalasString);
 
             newVisitante.setAsignacion(newAsignacionRecorrido);
+            newVisitante.setRecorrido(recorridoSalas);
 
-            if (anterior.getSalas().get(0).getCapacidad() < 100) {
+            if (actual.getSalas().get(0).getCapacidad() < 100) {
 
                 FinRecorridoSalaC newFinRecorridoSalaC = new FinRecorridoSalaC();
                 rndFinRecorrido = randomObject.nextDouble();
@@ -86,10 +96,12 @@ public class EventoLlegadaVisitante extends Evento {
                 newFinRecorridoSalaC.setFinRecorrido(finRecorrido);
 
                 newVisitante.setFinRecorridoC(newFinRecorridoSalaC);
+                newVisitante.setSala("C");
                 newVisitante.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_C);
 
                 actual.getVisitantes().add(newVisitante);
-                actual.getSalas().get(0).setCapacidad(anterior.getSalas().get(0).getCapacidad() + 1);
+                actual.getSalas().get(0).setCapacidad(actual.getSalas().get(0).getCapacidad() + 1);
+                actual.getSalas().get(0).setEstado(Sala.Estado.CON_VISITANTES);
                 
                 if(actual.getSalas().get(0).getCapacidad() == 100) {
                     actual.getSalas().get(0).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class Visitantes implements Cloneable {
     
-    private Sala sala;
+    private String sala;
     
     public enum Estado {
         ESPERANDO_RECORRIDO_A,
@@ -40,7 +40,7 @@ public class Visitantes implements Cloneable {
         finRecorridoD = new FinRecorridoSalaD();
     }
 
-    public Visitantes(Sala sala, Estado estado, List<Sala> recorrido, AsignacionRecorrido asignacion, 
+    public Visitantes(String sala, Estado estado, List<Sala> recorrido, AsignacionRecorrido asignacion, 
             FinRecorridoSalaA finRecorridoA, FinRecorridoSalaB finRecorridoB, FinRecorridoSalaC finRecorridoC, FinRecorridoSalaD finRecorridoD) {
         this.sala = sala;
         this.estado = estado;
@@ -52,11 +52,11 @@ public class Visitantes implements Cloneable {
         this.finRecorridoD = finRecorridoD;
     }
 
-    public Sala getSala() {
+    public String getSala() {
         return sala;
     }
 
-    public void setSala(Sala sala) {
+    public void setSala(String sala) {
         this.sala = sala;
     }
 
@@ -128,6 +128,7 @@ public class Visitantes implements Cloneable {
             clon.finRecorridoB = this.finRecorridoB;
             clon.finRecorridoC = this.finRecorridoC;
             clon.finRecorridoD = this.finRecorridoD;
+            return clon;
         } catch(CloneNotSupportedException ex) {
             Logger.getLogger(Visitantes.class.getName()).log(Level.SEVERE, null, ex);
         }

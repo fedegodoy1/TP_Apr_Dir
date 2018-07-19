@@ -21,6 +21,7 @@ public class Sala implements Cloneable{
     
     public Sala(Estado estado, String nombre, int capacidad, int cola) {
         this.estado = estado;
+        this.nombre = nombre;
         this.capacidad = capacidad;
         this.cola = cola;
     }
@@ -59,6 +60,10 @@ public class Sala implements Cloneable{
     
     public void agregarVisitanteALaCola() {
         cola ++;
+    }
+    
+    public void disminuirCola() {
+        cola --;
     }
     
     @Override

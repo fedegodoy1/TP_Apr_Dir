@@ -144,7 +144,7 @@ public class PopUpVisitantes extends javax.swing.JFrame {
                         break;
                     }
                     case 17: {
-                        value = visitante.getSala().getNombre();
+                        value = visitante.getSala();
                         break;
                     }
                 }
