@@ -40,7 +40,7 @@ public class EventoLlegadaVisitante extends Evento {
         double rndLote = randomObject.nextDouble();
         int lote = 0;
         lote = Distribuciones.calcular_poisson(config.getMediaLote(), rndLote);
-        newAsignacionLote.setRnd(rndLote);
+        //newAsignacionLote.setRnd(rndLote);
         newAsignacionLote.setLoteVisitantes(lote);
 
         actual.setLote(newAsignacionLote);
@@ -49,7 +49,7 @@ public class EventoLlegadaVisitante extends Evento {
             newLoteVisitantes.add(new Visitantes());
         }
 
-        double rndAsignacionRecorrido = 0.0;
+        
 
         double rndFinRecorrido = 0.0;
         double tRecorrido = 0.0;
@@ -68,7 +68,8 @@ public class EventoLlegadaVisitante extends Evento {
         // es siempre 0 por ser la primera sala que se recorre
         for (Visitantes newVisitante : newLoteVisitantes) {
 
-            rndAsignacionRecorrido = randomObject.nextDouble();
+            double rndAsignacionRecorrido = randomObject.nextDouble();
+            
             List<Sala> recorridoSalas = Calculos.calcularAsignacionDeRecorrido(rndAsignacionRecorrido, actual.getSalas());
             String recorridoSalasString = "";
             for(Sala sala : recorridoSalas) {
@@ -81,7 +82,7 @@ public class EventoLlegadaVisitante extends Evento {
             newAsignacionRecorrido.setRnd(rndAsignacionRecorrido);
             newAsignacionRecorrido.setSalas(recorridoSalasString);
 
-            newVisitante.setAsignacion(newAsignacionRecorrido);
+            newVisitante.setAsignacion(new AsignacionRecorrido(rndAsignacionRecorrido, recorridoSalasString));
             newVisitante.setRecorrido(recorridoSalas);
 
             if (actual.getSalas().get(0).getCapacidad() < 100) {

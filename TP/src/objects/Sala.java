@@ -15,7 +15,7 @@ public class Sala implements Cloneable{
     private String nombre;
     private int capacidad;
     private int cola;
-
+    
     public Sala() {
     }
     

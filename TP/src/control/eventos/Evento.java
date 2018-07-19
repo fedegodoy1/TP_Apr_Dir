@@ -2,6 +2,7 @@ package control.eventos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import objects.Sala;
 import objects.Visitantes;
 
@@ -40,10 +41,10 @@ public abstract class Evento {
     public abstract void actualizarEstadoVector();
     
     public static List<Visitantes> clonarVisitantes(List<Visitantes> listaAClonar) {
-        List<Visitantes> listaClonada = new ArrayList<>(listaAClonar.size());
-        for (Visitantes visitante : listaAClonar) {
-            listaClonada.add(visitante.clone());
-        }
+        List<Visitantes> listaClonada = listaAClonar.stream().map(visitante -> new Visitantes(visitante)).collect(Collectors.toList());
+//        for (Visitantes visitante : listaAClonar) {
+//            listaClonada.add(visitante.clone());
+//        }
         return listaClonada;
     }
     

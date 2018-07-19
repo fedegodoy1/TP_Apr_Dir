@@ -23,7 +23,7 @@ public class ControladorSimulacion {
     ControladorSimulacion() {
         vistaAplicacion = new VentanaPrincipal(this);
     }
-
+    
     public void mostrarVentanaPrincipal() {
         vistaAplicacion.setVisible(true);
     }

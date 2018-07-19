@@ -16,6 +16,12 @@ public class FinRecorridoSalaA implements Cloneable {
         rnd1 = rnd2 = tRecorrido = finRecorrido = Double.MAX_VALUE;
         senocoseno = COS;
     }
+    
+    public FinRecorridoSalaA(double rnd1, double rnd2, String senocoseno) {
+        this.rnd1 = rnd1;
+        this.rnd2 = rnd2;
+        senocoseno = senocoseno;
+    }
 
     public FinRecorridoSalaA(double rnd1, double rnd2, double tRecorrido, double finRecorrido) {
         this.rnd1 = rnd1;
@@ -69,7 +75,7 @@ public class FinRecorridoSalaA implements Cloneable {
     public FinRecorridoSalaA clone() {
         try {
             FinRecorridoSalaA clon = (FinRecorridoSalaA) super.clone();
-            clon.finRecorrido = Double.MAX_VALUE;
+            clon.finRecorrido = this.finRecorrido;
             clon.rnd1 = this.rnd1;
             clon.rnd2 = this.rnd2;
             clon.tRecorrido = Double.MAX_VALUE;

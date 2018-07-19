@@ -17,6 +17,12 @@ public class FinRecorridoSalaB {
         senocoseno = COS;
     }
     
+    public FinRecorridoSalaB(double rnd1, double rnd2, String senocoseno) {
+        this.rnd1 = rnd1;
+        this.rnd2 = rnd2;
+        senocoseno = senocoseno;
+    }
+    
     public FinRecorridoSalaB(double rnd1, double rnd2, double tRecorrido, double finRecorrido) {
         this.rnd1 = rnd1;
         this.rnd2 = rnd2;

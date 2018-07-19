@@ -85,58 +85,114 @@ public class PopUpVisitantes extends javax.swing.JFrame {
                     }
                     case 2: {
                         value = visitante.getFinRecorridoC().getRnd();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 3: {
                         value = visitante.getFinRecorridoC().gettRecorrido();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 4: {
                         value = visitante.getFinRecorridoC().getFinRecorrido();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 5: {
                         value = visitante.getFinRecorridoA().getRnd1();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 6: {
                         value = visitante.getFinRecorridoA().getRnd2();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 7: {
                         value = visitante.getFinRecorridoA().gettRecorrido();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 8: {
                         value = visitante.getFinRecorridoA().getFinRecorrido();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 9: {
                         value = visitante.getFinRecorridoB().getRnd1();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 10: {
                         value = visitante.getFinRecorridoB().getRnd2();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 11: {
                         value = visitante.getFinRecorridoB().gettRecorrido();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 12: {
                         value = visitante.getFinRecorridoB().getFinRecorrido();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 13: {
                         value = visitante.getFinRecorridoD().getRnd();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 14: {
                         value = visitante.getFinRecorridoD().gettRecorrido();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 15: {
                         value = visitante.getFinRecorridoD().getFinRecorrido();
+                        if (value instanceof Double && ((Double)value) == Double.MAX_VALUE)
+                        {
+                            value = Double.valueOf(0);
+                        }
                         break;
                     }
                     case 16: {

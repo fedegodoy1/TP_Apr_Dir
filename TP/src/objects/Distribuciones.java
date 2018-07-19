@@ -45,14 +45,15 @@ public class Distribuciones {
     }
 
     public static int calcular_poisson(double media, double rnd) {
-        double p = 0;
+        double p = 0; 
+        Random randomObject = new Random();
         int x = 0;
 
         double a = (double) Math.exp(((media) * -1));
         p = 1;
         x = -1;
         do {
-            p = p * rnd;
+            p = p * randomObject.nextDouble();
             x = x + 1;
         } while (p >= a);
         return x;

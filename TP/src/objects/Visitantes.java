@@ -51,6 +51,17 @@ public class Visitantes implements Cloneable {
         this.finRecorridoC = finRecorridoC;
         this.finRecorridoD = finRecorridoD;
     }
+    
+    public Visitantes(Visitantes v) {
+        this.sala = v.sala;
+        this.estado = v.estado;
+        this.recorrido = v.recorrido;
+        this.asignacion = v.asignacion;
+        this.finRecorridoA = v.finRecorridoA;
+        this.finRecorridoB = v.finRecorridoB;
+        this.finRecorridoC = v.finRecorridoC;
+        this.finRecorridoD = v.finRecorridoD;
+    }
 
     public String getSala() {
         return sala;
@@ -134,4 +145,4 @@ public class Visitantes implements Cloneable {
         }
         return new Visitantes();
     }
-}
+    }

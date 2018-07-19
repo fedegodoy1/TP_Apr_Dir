@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -600,7 +601,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel34)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsp_vector, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                .addComponent(jsp_vector, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -651,8 +652,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_simular)
                     .addComponent(btn_set_valores_por_defecto)
@@ -664,6 +665,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_simularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simularActionPerformed
+        try
+        {
+            actualizarConfiguracion();
+        }
+        catch (InputException ie)
+        {
+            JOptionPane.showMessageDialog(null, ie.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         model.setDatos(new ArrayList<>());
         controlador.simular();
         SwingUtilities.invokeLater( () -> { jTabbedPane1.setSelectedIndex(1);});
@@ -759,6 +769,161 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txt_tiempo_a_simular;
     // End of variables declaration//GEN-END:variables
 
+    
+    private void actualizarConfiguracion() throws InputException {
+        Configuracion conf = Configuracion.getConfiguracion();
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_desde_sala_c.getText())) || Double.parseDouble(txt_desde_sala_c.getText()) < 0) {
+                throw new InputException("Minuto desde sala C invalido");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Minuto desde sala C invalido");
+        }
+        Double desdeSalaC = Double.parseDouble(txt_desde_sala_c.getText());
+        
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_hasta_sala_c.getText())) || Double.parseDouble(txt_hasta_sala_c.getText()) < 0) {
+                throw new InputException("Minuto Hasta sala C invalido");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Minuto Hasta sala C invalido");
+        }
+        Double hastaSalaC = Double.parseDouble(txt_hasta_sala_c.getText());
+        
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_desv_sala_A.getText())) || Double.parseDouble(txt_desv_sala_A.getText()) < 0) {
+                throw new InputException("Desviacion sala A invalido");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Desviacion sala A invalido");
+        }
+        Double desviacionSalaA = Double.parseDouble(txt_desv_sala_A.getText());
+        
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_media_sala_a.getText())) || Double.parseDouble(txt_media_sala_a.getText()) < 0) {
+                throw new InputException("Media sala A invalido");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Media sala A invalido");
+        }
+        Double mediaSalaA = Double.parseDouble(txt_media_sala_a.getText());
+                
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_desviacion_sala_b.getText())) || Double.parseDouble(txt_desviacion_sala_b.getText()) < 0) {
+                throw new InputException("Desviacion sala B invalido");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Desviacion sala B invalido");
+        }
+        Double desviacionSalaB = Double.parseDouble(txt_desviacion_sala_b.getText());
+        
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_media_sala_b.getText())) || Double.parseDouble(txt_media_sala_b.getText()) < 0) {
+                throw new InputException("Media sala B invalido");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Media sala B invalido");
+        }
+        Double mediaSalaB = Double.parseDouble(txt_media_sala_b.getText());
+        
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_desde_sala_d.getText())) || Double.parseDouble(txt_desde_sala_d.getText()) < 0) {
+                throw new InputException("Minuto desde sala D invalido");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Minuto desde sala D invalido");
+        }
+        Double desdeSalaD = Double.parseDouble(txt_desde_sala_d.getText());
+        
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_hasta_sala_d.getText())) || Double.parseDouble(txt_hasta_sala_d.getText()) < 0) {
+                throw new InputException("Minuto Hasta sala D invalido");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Minuto Hasta sala D invalido");
+        }
+        Double hastaSalaD = Double.parseDouble(txt_hasta_sala_d.getText());
+        
+        try
+        {
+            if (Integer.parseInt(txt_minuto_mostrar_desde.getText()) < 0)
+            {
+                throw new InputException("Minutos a simular desde invalidos");
+            }
+        }
+        catch (NumberFormatException nfe)
+        {
+            throw new InputException("Minutos a simular desde invalidos");
+        }
+        int minutosASimularDesde = Integer.parseInt(txt_minuto_mostrar_desde.getText());
+        
+        try
+        {
+            if (Integer.parseInt(txt_tiempo_a_simular.getText()) < 0)
+            {
+                throw new InputException("Minutos a simular invalidos");
+            }
+        }
+        catch (NumberFormatException nfe)
+        {
+            throw new InputException("Minutos a simular invalidos");
+        }
+        int minutosASimular = Integer.parseInt(txt_tiempo_a_simular.getText());
+        
+        try
+        {
+            if (Integer.parseInt(txt_it_a_mostrar.getText()) < 0)
+            {
+                throw new InputException("Iteraciones a mostrar invalidos");
+            }
+        }
+        catch (NumberFormatException nfe)
+        {
+            throw new InputException("Iteraciones a mostrar invalidos");
+        }
+        int iteracionesAMostrar = Integer.parseInt(txt_it_a_mostrar.getText());
+        
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_media_llegada_visitantes.getText())) || Double.parseDouble(txt_media_llegada_visitantes.getText()) < 0) {
+                throw new InputException("Media para llegada de visitantes invalida");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Media para llegada de visitantes invalida");
+        }
+        Double mediaLlegada = Double.parseDouble(txt_media_llegada_visitantes.getText());
+        
+        try {
+            if(Double.isNaN(Double.parseDouble(txt_media_asig_recorrido.getText())) || Double.parseDouble(txt_media_asig_recorrido.getText()) < 0) {
+                throw new InputException("Media para asignacion de lote invalida");
+            }
+        } catch (NumberFormatException nfe) {
+            throw new InputException("Media para asignacion de lote invalida");
+        }
+        Double mediaAsig = Double.parseDouble(txt_media_asig_recorrido.getText());
+        
+        conf.setDesdeFinRecorridoSalaD(desdeSalaD);
+        conf.setHastaFinRecorridoSalaD(hastaSalaD);
+        conf.setDesdeFinRecorridoSalaC(desdeSalaC);
+        conf.setHastaFinRecorridoSalaD(hastaSalaC);
+        conf.setMediaFinRecorridoSalaA(mediaSalaA);
+        conf.setDesviacionFinRecorridoSalaA(desviacionSalaA);
+        conf.setMediaFinRecorridoSalaB(mediaSalaB);
+        conf.setDesviacionFinRecorridoSalaB(desviacionSalaB);
+        conf.setMediaLlegadaVisitantes(mediaLlegada);
+        conf.setMediaLote(mediaAsig);
+        conf.setMinutosASimular(minutosASimular);
+        conf.setMinutoDesde(minutosASimularDesde);
+        conf.setIteracionesAMostrar(iteracionesAMostrar);
+    }
+    
+    private static class InputException extends Exception{
+
+        public InputException(String msg)
+        {
+            super(msg);
+        }
+    }
+    
     private void setearModeloDeTextos() { 
         DoubleInputVerifier doubleVer = new DoubleInputVerifier();
         txt_media_asig_recorrido.setInputVerifier(doubleVer);

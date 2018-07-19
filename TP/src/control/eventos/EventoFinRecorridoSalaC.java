@@ -2,6 +2,8 @@ package control.eventos;
 
 import control.ControladorSimulacion;
 import control.VectorEstado;
+import static control.eventos.Evento.FinRecorridoSalaA;
+import eventos.FinRecorridoSalaA;
 import eventos.FinRecorridoSalaC;
 import eventos.FinRecorridoSalaD;
 import java.util.Random;
@@ -29,6 +31,8 @@ public class EventoFinRecorridoSalaC extends Evento {
         actual.setAcumuladorVisitantes(anterior.getAcumuladorVisitantes());
         actual.setSalas(clonarSalas(anterior.getSalas()));
         actual.setVisitantes(clonarVisitantes(anterior.getVisitantes()));
+        actual.setLlegadaVisitantes(anterior.getLlegadaVisitantes());
+        actual.setLote(anterior.getAsignacionLote());
 
         FinRecorridoSalaC newFinRecorridoSalaC = new FinRecorridoSalaC();
         double rndFinRecorridoC = 0.0;
@@ -52,8 +56,69 @@ public class EventoFinRecorridoSalaC extends Evento {
             }
         }
 
+        if (visitanteTerminoDeRecorrer.getRecorrido().get(1).getNombre().equals("A")) {
+            //Si la capacidad de A es menor que 40
+            if (actual.getSalas().get(1).getCapacidad() < 40) {
+
+                FinRecorridoSalaA nuevoFinRecorridoA = new FinRecorridoSalaA();
+
+                nuevoFinRecorridoA.setRnd1(randomObject.nextDouble());
+                nuevoFinRecorridoA.setRnd2(randomObject.nextDouble());
+                nuevoFinRecorridoA.setSenocoseno(COS);
+
+                tRecorridoA = Distribuciones.calcular_normal(config.getMediaFinRecorridoSalaA(),
+                        config.getDesviacionFinRecorridoSalaA(),
+                        nuevoFinRecorridoA.getRnd1(),
+                        nuevoFinRecorridoA.getRnd2(),
+                        nuevoFinRecorridoA.getSenocoseno());
+                nuevoFinRecorridoA.setFinRecorrido(tRecorridoA + horaActual);
+
+                visitanteTerminoDeRecorrer.setFinRecorridoA(nuevoFinRecorridoA);
+                visitanteTerminoDeRecorrer.setFinRecorridoC(new FinRecorridoSalaC());
+
+                visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_A);
+                visitanteTerminoDeRecorrer.setSala("A");
+                actual.getSalas().get(1).setEstado(Sala.Estado.CON_VISITANTES);
+                actual.getSalas().get(1).setCapacidad(anterior.getSalas().get(1).getCapacidad() + 1);
+                if (actual.getSalas().get(1).getCapacidad() == 40) {
+                    actual.getSalas().get(1).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
+                }
+
+            } else {
+                visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_A);
+                actual.getSalas().get(1).agregarVisitanteALaCola();
+            }
+        }
+        if (visitanteTerminoDeRecorrer.getRecorrido().get(1).getNombre().equals("D")) {
+            // Me fijo en la capacidad de D, que esta en la posicion 3 de la lista de las salas
+            if (actual.getSalas().get(3).getCapacidad() < 100) {
+                rndFinRecorridoD = randomObject.nextDouble();
+                tRecorridoD = Distribuciones.calcular_uniforme(config.getDesdeFinRecorridoSalaC(),
+                        config.getHastaFinRecorridoSalaD(),
+                        rndFinRecorridoD);
+                finRecorridoD = tRecorridoD + horaActual;
+                FinRecorridoSalaD newFinRecorridoD = new FinRecorridoSalaD(rndFinRecorridoD, tRecorridoD, finRecorridoD);
+
+                visitanteTerminoDeRecorrer.setFinRecorridoC(new FinRecorridoSalaC());
+                visitanteTerminoDeRecorrer.setFinRecorridoD(newFinRecorridoD);
+                visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_D);
+                visitanteTerminoDeRecorrer.setSala("D");
+                //aumento a la sala D (3)
+                actual.getSalas().get(3).setCapacidad(anterior.getSalas().get(3).getCapacidad() + 1);
+
+                if (actual.getSalas().get(3).getCapacidad() == 100) {
+                    actual.getSalas().get(3).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
+                }
+            } else {
+                visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_D);
+                actual.getSalas().get(3).agregarVisitanteALaCola();
+            }
+        }
+
+        actual.getSalas().get(0).setCapacidad(anterior.getSalas().get(0).getCapacidad() - 1);
+
         // Calculo el proximo recorrido en la sala C
-        if (actual.getSalas().get(0).getCola() > 0 && actual.getSalas().get(0).getCapacidad() < 100) {
+        if (actual.getSalas().get(0).getCola() > 0) {
             actual.getSalas().get(0).setEstado(Sala.Estado.CON_VISITANTES);
             Visitantes visitanteARecorrerSalaC = new Visitantes();
             for (Visitantes visitante : actual.getVisitantes()) {
@@ -79,7 +144,7 @@ public class EventoFinRecorridoSalaC extends Evento {
 
             actual.getSalas().get(0).setCapacidad(anterior.getSalas().get(0).getCapacidad() + 1);
             actual.getSalas().get(0).disminuirCola();
-            
+
             if (actual.getSalas().get(0).getCapacidad() == 100) {
                 actual.getSalas().get(0).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
             }
@@ -87,78 +152,6 @@ public class EventoFinRecorridoSalaC extends Evento {
         } else if (actual.getSalas().get(0).getCola() == 0 && actual.getSalas().get(0).getCapacidad() == 0) {
             actual.getSalas().get(0).setEstado(Sala.Estado.VACIA);
         }
-
-        // Obtengo el recorrido para asignarlo a la proxima sala
-        if (visitanteTerminoDeRecorrer.getRecorrido().get(1).getNombre().equals("A")) {
-            //Si la capacidad de A es menor que 40
-            if (actual.getSalas().get(1).getCapacidad() < 40) {
-
-                if (COS.equals(visitanteTerminoDeRecorrer.getFinRecorridoA().getSenocoseno())) {
-
-                    visitanteTerminoDeRecorrer.getFinRecorridoA().setSenocoseno(SENO);
-                    tRecorridoA = Distribuciones.calcular_normal(config.getMediaFinRecorridoSalaA(),
-                            config.getDesviacionFinRecorridoSalaA(),
-                            visitanteTerminoDeRecorrer.getFinRecorridoA().getRnd1(),
-                            visitanteTerminoDeRecorrer.getFinRecorridoA().getRnd2(),
-                            visitanteTerminoDeRecorrer.getFinRecorridoA().getSenocoseno());
-
-                    visitanteTerminoDeRecorrer.getFinRecorridoA().settRecorrido(tRecorridoA);
-                    visitanteTerminoDeRecorrer.getFinRecorridoA().setFinRecorrido(tRecorridoA + horaActual);
-                    visitanteTerminoDeRecorrer.setFinRecorridoC(new FinRecorridoSalaC());
-                } else {
-
-                    rndFinRecorridoA1 = randomObject.nextDouble();
-                    rndFinRecorridoA2 = randomObject.nextDouble();
-                    visitanteTerminoDeRecorrer.getFinRecorridoA().setSenocoseno(COS);
-                    tRecorridoA = Distribuciones.calcular_normal(config.getMediaFinRecorridoSalaA(),
-                            config.getDesviacionFinRecorridoSalaA(),
-                            rndFinRecorridoA1,
-                            rndFinRecorridoA2,
-                            visitanteTerminoDeRecorrer.getFinRecorridoA().getSenocoseno());
-
-                    visitanteTerminoDeRecorrer.getFinRecorridoA().setRnd1(rndFinRecorridoA1);
-                    visitanteTerminoDeRecorrer.getFinRecorridoA().setRnd2(rndFinRecorridoA2);
-                    visitanteTerminoDeRecorrer.getFinRecorridoA().settRecorrido(tRecorridoA);
-                    visitanteTerminoDeRecorrer.getFinRecorridoA().setFinRecorrido(tRecorridoA + horaActual);
-                    visitanteTerminoDeRecorrer.setFinRecorridoC(new FinRecorridoSalaC());
-                }
-
-                visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_A);
-
-                actual.getSalas().get(1).setCapacidad(anterior.getSalas().get(1).getCapacidad() + 1);
-                if (actual.getSalas().get(1).getCapacidad() == 40) {
-                    actual.getSalas().get(1).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
-                }
-
-            } else {
-                visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_A);
-                actual.getSalas().get(1).agregarVisitanteALaCola();
-            }
-        } else if (visitanteTerminoDeRecorrer.getRecorrido().get(1).getNombre().equals("D")) {
-            // Me fijo en la capacidad de D, que esta en la posicion 3 de la lista de las salas
-            if (actual.getSalas().get(3).getCapacidad() < 100) {
-                rndFinRecorridoD = randomObject.nextDouble();
-                tRecorridoD = Distribuciones.calcular_uniforme(config.getDesdeFinRecorridoSalaC(),
-                        config.getHastaFinRecorridoSalaD(),
-                        rndFinRecorridoD);
-                finRecorridoD = tRecorridoD + horaActual;
-                FinRecorridoSalaD newFinRecorridoD = new FinRecorridoSalaD(rndFinRecorridoD, tRecorridoD, finRecorridoD);
-                
-                visitanteTerminoDeRecorrer.setFinRecorridoC(new FinRecorridoSalaC());
-                visitanteTerminoDeRecorrer.setFinRecorridoD(newFinRecorridoD);
-                //aumento a la sala D (3)
-                actual.getSalas().get(3).setCapacidad(anterior.getSalas().get(3).getCapacidad() + 1);
-
-                if (actual.getSalas().get(3).getCapacidad() == 100) {
-                    actual.getSalas().get(3).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
-                }
-            } else {
-                visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_D);
-                actual.getSalas().get(3).agregarVisitanteALaCola();
-            }
-        }
-        //Ya sea que sumo uno mas al recorrido que sea siempre se le resta el que se va
-        actual.getSalas().get(0).setCapacidad(anterior.getSalas().get(0).getCapacidad() - 1);
 
     }
 

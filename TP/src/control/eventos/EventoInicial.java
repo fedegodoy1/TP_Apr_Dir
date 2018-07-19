@@ -2,6 +2,7 @@ package control.eventos;
 
 import control.ControladorSimulacion;
 import control.VectorEstado;
+import eventos.AsignacionLote;
 import java.util.ArrayList;
 import java.util.List;
 import eventos.LlegadaVisitantes;
@@ -26,6 +27,7 @@ public class EventoInicial extends Evento {
         actual.setMaxVisitantesEnEntrada(0);
         actual.setSalas(getSalaList());
         actual.setVisitantes(new ArrayList<Visitantes>());
+        actual.setLote(new AsignacionLote());
         
         //Seteo de la proxima llegada
         LlegadaVisitantes proxLlegada = new LlegadaVisitantes();

@@ -16,13 +16,13 @@ public class Calculos {
         recorridoCorto.remove(2);
         recorridoCorto.remove(1);
         
-        if(rnd >= 0.0 && rnd <= 0.59) {
+        if(rnd < (float) 0.60) {
             return recorridoCorto;
         }
-        if(rnd >= 0.60 && rnd <= 0.79) {
+        if(rnd < (float) 0.80) {
             return recorridoCompleto;
         }
-        if(rnd >= 0.80 && rnd <= 0.99) {
+        if(rnd < (float) 1.0) {
             return recorridoMedio;
         } 
         return null;
