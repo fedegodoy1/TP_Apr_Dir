@@ -578,7 +578,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Configuraicon", jpn_config);
+        jTabbedPane1.addTab("Configuracion", jpn_config);
 
         jLabel34.setText("Vector Estado");
 
@@ -652,7 +652,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_simular)
@@ -676,6 +676,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         model.setDatos(new ArrayList<>());
         controlador.simular();
+        setearEstadisticas();
         SwingUtilities.invokeLater( () -> { jTabbedPane1.setSelectedIndex(1);});
     }//GEN-LAST:event_btn_simularActionPerformed
 
@@ -914,6 +915,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         conf.setMinutosASimular(minutosASimular);
         conf.setMinutoDesde(minutosASimularDesde);
         conf.setIteracionesAMostrar(iteracionesAMostrar);
+    }
+
+    private void setearEstadisticas() {
+        txt_max_gente_cola.setText(String.valueOf(controlador.mostrarEstadisticas().getMaxCantVisitantesEnCola()));
+        txt_acum_visitantes.setText(String.valueOf(controlador.mostrarEstadisticas().getAcumVisitantesEnSistema()));
     }
     
     private static class InputException extends Exception{

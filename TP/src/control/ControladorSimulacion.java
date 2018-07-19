@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.Set;
 import model.Configuracion;
 import model.VectorEstadoUI;
+import objects.Estadisticas;
 import objects.Visitantes;
 
 public class ControladorSimulacion {
 
     VentanaPrincipal vistaAplicacion;
+    Estadisticas estadisticas;
 
     private static VectorEstado actual;
     private static VectorEstado anterior;
@@ -22,6 +24,11 @@ public class ControladorSimulacion {
 
     ControladorSimulacion() {
         vistaAplicacion = new VentanaPrincipal(this);
+        estadisticas = new Estadisticas();
+    }
+    
+    public Estadisticas mostrarEstadisticas() {
+        return estadisticas;
     }
     
     public void mostrarVentanaPrincipal() {
@@ -55,8 +62,14 @@ public class ControladorSimulacion {
         }
         
         //Actualizar Vista
+        obtenerEstadisticas();
         vistaAplicacion.setearModelo(modelo);
         modelo = new ArrayList<>();
+    }
+    
+    private void obtenerEstadisticas() {
+        estadisticas.setMaxCantVisitantesEnCola(actual.getMaxVisitantesEnEntrada());
+        estadisticas.setAcumVisitantesEnSistema(actual.getAcumuladorVisitantes());
     }
 
     public void inicializar() {

@@ -71,6 +71,7 @@ public class EventoFinRecorridoSalaC extends Evento {
                         nuevoFinRecorridoA.getRnd1(),
                         nuevoFinRecorridoA.getRnd2(),
                         nuevoFinRecorridoA.getSenocoseno());
+                nuevoFinRecorridoA.settRecorrido(tRecorridoA);
                 nuevoFinRecorridoA.setFinRecorrido(tRecorridoA + horaActual);
 
                 visitanteTerminoDeRecorrer.setFinRecorridoA(nuevoFinRecorridoA);
@@ -105,6 +106,7 @@ public class EventoFinRecorridoSalaC extends Evento {
                 visitanteTerminoDeRecorrer.setSala("D");
                 //aumento a la sala D (3)
                 actual.getSalas().get(3).setCapacidad(anterior.getSalas().get(3).getCapacidad() + 1);
+                actual.getSalas().get(3).setEstado(Sala.Estado.CON_VISITANTES);
 
                 if (actual.getSalas().get(3).getCapacidad() == 100) {
                     actual.getSalas().get(3).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
