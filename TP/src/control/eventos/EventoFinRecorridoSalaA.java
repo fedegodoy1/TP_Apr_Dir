@@ -99,6 +99,7 @@ public class EventoFinRecorridoSalaA extends Evento {
                 visitanteTerminoDeRecorrerSalaA.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_B);
                 visitanteTerminoDeRecorrerSalaA.setSala("B");
 
+                actual.getSalas().get(2).setEstado(Sala.Estado.CON_VISITANTES);
                 actual.getSalas().get(2).setCapacidad(actual.getSalas().get(2).getCapacidad() + 1);
 
                 if (actual.getSalas().get(2).getCapacidad() == 40) {
