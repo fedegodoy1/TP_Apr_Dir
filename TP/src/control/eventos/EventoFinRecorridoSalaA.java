@@ -133,7 +133,7 @@ public class EventoFinRecorridoSalaA extends Evento {
                 visitanteTerminoDeRecorrerSalaA.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_B);
                 visitanteTerminoDeRecorrerSalaA.setSala("B");
                 actual.getSalas().get(2).setEstado(Sala.Estado.CON_VISITANTES);
-                actual.getSalas().get(2).setCapacidad(actual.getSalas().get(2).getCapacidad() + 1);
+                actual.getSalas().get(2).aumentarCapacidad();
 
                 if (actual.getSalas().get(2).getCapacidad() == 40) {
                     actual.getSalas().get(2).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
@@ -162,7 +162,7 @@ public class EventoFinRecorridoSalaA extends Evento {
                 visitanteTerminoDeRecorrerSalaA.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_D);
                 visitanteTerminoDeRecorrerSalaA.setSala("D");
                 actual.getSalas().get(3).setEstado(Sala.Estado.CON_VISITANTES);
-                actual.getSalas().get(3).setCapacidad(anterior.getSalas().get(3).getCapacidad() + 1);
+                actual.getSalas().get(3).aumentarCapacidad();
 
                 if (actual.getSalas().get(3).getCapacidad() == 100) {
                     actual.getSalas().get(3).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
@@ -173,9 +173,9 @@ public class EventoFinRecorridoSalaA extends Evento {
             }
         }
 
-        actual.getSalas().get(1).setCapacidad(actual.getSalas().get(1).getCapacidad() - 1);
+        actual.getSalas().get(1).disminuirCapacidad();
 
-        if (actual.getSalas().get(1).getCola() > 0) {
+        if (actual.getSalas().get(1).getCola() > 0 && actual.getSalas().get(1).getCapacidad() < 40) {
             actual.getSalas().get(1).setEstado(Sala.Estado.CON_VISITANTES);
             Visitantes visitanteQueRecorreSalaA = new Visitantes();
             for (Visitantes visitante : actual.getVisitantes()) {
@@ -240,7 +240,7 @@ public class EventoFinRecorridoSalaA extends Evento {
             visitanteQueRecorreSalaA.setSala("A");
 
             // Disminuyo a la sala C(0) y aumento en la sala A(1)
-            actual.getSalas().get(1).setCapacidad(anterior.getSalas().get(1).getCapacidad() + 1);
+            actual.getSalas().get(1).aumentarCapacidad();
 
             if (actual.getSalas().get(1).getCapacidad() == 40) {
                 actual.getSalas().get(1).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);

@@ -98,6 +98,14 @@ public class Sala implements Cloneable {
     public void disminuirCola() {
         cola--;
     }
+    
+    public void aumentarCapacidad() {
+        capacidad ++;
+    }
+    
+    public void disminuirCapacidad() {
+        capacidad --;
+    }
 
     public String getSenocosenoSalaA() {
         return senocosenoSalaA;

@@ -30,6 +30,7 @@ public class EventoLlegadaVisitante extends Evento {
 
         actual.setVisitantes(clonarVisitantes(anterior.getVisitantes()));
         actual.setSalas(clonarSalas(anterior.getSalas()));
+        actual.setMaxVisitantesEnEntrada(anterior.getMaxVisitantesEnEntrada());
 
         Random randomObject = new Random();
         LlegadaVisitantes newLlegada = new LlegadaVisitantes();
@@ -97,7 +98,7 @@ public class EventoLlegadaVisitante extends Evento {
                 newVisitante.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_C);
 
                 actual.getVisitantes().add(newVisitante);
-                actual.getSalas().get(0).setCapacidad(actual.getSalas().get(0).getCapacidad() + 1);
+                actual.getSalas().get(0).aumentarCapacidad();
                 actual.getSalas().get(0).setEstado(Sala.Estado.CON_VISITANTES);
                 
                 if(actual.getSalas().get(0).getCapacidad() == 100) {
@@ -111,12 +112,10 @@ public class EventoLlegadaVisitante extends Evento {
             }
         }
         actual.setAcumuladorVisitantes(anterior.getAcumuladorVisitantes() + lote);
-        superaMaximoEnCola(actual);
+        actual.setMaxVisitantesEnEntrada(superaMaximoEnCola(actual.getMaxVisitantesEnEntrada(), actual.getSalas().get(0).getCola()));
     }
     
-    private void superaMaximoEnCola(VectorEstado actual) {
-        if(actual.getMaxVisitantesEnEntrada() > actual.getSalas().get(0).getCola()) {
-            actual.setMaxVisitantesEnEntrada(actual.getSalas().get(0).getCola());
-        }
+    private Integer superaMaximoEnCola(Integer max, Integer cola) {
+        return (max > cola) ? max : cola;
     }
 }

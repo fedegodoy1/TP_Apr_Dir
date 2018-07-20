@@ -125,7 +125,7 @@ public class EventoFinRecorridoSalaC extends Evento {
                 visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_A);
                 visitanteTerminoDeRecorrer.setSala("A");
                 actual.getSalas().get(1).setEstado(Sala.Estado.CON_VISITANTES);
-                actual.getSalas().get(1).setCapacidad(anterior.getSalas().get(1).getCapacidad() + 1);
+                actual.getSalas().get(1).aumentarCapacidad();
                 if (actual.getSalas().get(1).getCapacidad() == 40) {
                     actual.getSalas().get(1).setEstado(Sala.Estado.CAPACIDAD_MAXIMA);
                 }
@@ -150,7 +150,7 @@ public class EventoFinRecorridoSalaC extends Evento {
                 visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_D);
                 visitanteTerminoDeRecorrer.setSala("D");
                 //aumento a la sala D (3)
-                actual.getSalas().get(3).setCapacidad(anterior.getSalas().get(3).getCapacidad() + 1);
+                actual.getSalas().get(3).aumentarCapacidad();
                 actual.getSalas().get(3).setEstado(Sala.Estado.CON_VISITANTES);
 
                 if (actual.getSalas().get(3).getCapacidad() == 100) {
@@ -162,10 +162,10 @@ public class EventoFinRecorridoSalaC extends Evento {
             }
         }
 
-        actual.getSalas().get(0).setCapacidad(anterior.getSalas().get(0).getCapacidad() - 1);
+        actual.getSalas().get(0).disminuirCapacidad();
 
         // Calculo el proximo recorrido en la sala C
-        if (actual.getSalas().get(0).getCola() > 0) {
+        if (actual.getSalas().get(0).getCola() > 0 && actual.getSalas().get(0).getCapacidad() < 100) {
             actual.getSalas().get(0).setEstado(Sala.Estado.CON_VISITANTES);
             Visitantes visitanteARecorrerSalaC = new Visitantes();
             for (Visitantes visitante : actual.getVisitantes()) {
@@ -189,7 +189,7 @@ public class EventoFinRecorridoSalaC extends Evento {
 
             visitanteARecorrerSalaC.setFinRecorridoC(newFinRecorridoSalaC);
 
-            actual.getSalas().get(0).setCapacidad(anterior.getSalas().get(0).getCapacidad() + 1);
+            actual.getSalas().get(0).aumentarCapacidad();
             actual.getSalas().get(0).disminuirCola();
 
             if (actual.getSalas().get(0).getCapacidad() == 100) {

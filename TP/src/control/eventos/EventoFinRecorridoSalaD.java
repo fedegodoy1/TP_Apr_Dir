@@ -47,9 +47,9 @@ public class EventoFinRecorridoSalaD extends Evento {
         visitanteTerminoDeRecorrerSalaD = null;
         actual.setVisitantes(visitantesActuales);
 
-        actual.getSalas().get(3).setCapacidad(actual.getSalas().get(3).getCapacidad() - 1);
+        actual.getSalas().get(3).disminuirCapacidad();
 
-        if (actual.getSalas().get(3).getCola() > 0) {
+        if (actual.getSalas().get(3).getCola() > 0 && actual.getSalas().get(3).getCapacidad() < 100) {
             actual.getSalas().get(3).setEstado(Sala.Estado.CON_VISITANTES);
             Visitantes visitanteQueRecorreSalaD = new Visitantes();
 
@@ -71,7 +71,7 @@ public class EventoFinRecorridoSalaD extends Evento {
             FinRecorridoSalaD newFinRecorridoD = new FinRecorridoSalaD(rndFinRecorridoD, tRecorridoD, finRecorridoD);
             visitanteQueRecorreSalaD.setFinRecorridoD(newFinRecorridoD);
             
-            actual.getSalas().get(3).setCapacidad(actual.getSalas().get(3).getCapacidad() + 1);
+            actual.getSalas().get(3).aumentarCapacidad();
             actual.getSalas().get(3).disminuirCola();
 
             if (actual.getSalas().get(3).getCapacidad() == 100) {
