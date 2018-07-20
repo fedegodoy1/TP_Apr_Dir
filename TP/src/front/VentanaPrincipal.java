@@ -474,7 +474,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Asignacion de Recorrido"));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Asignacion de Lote"));
 
         jLabel10.setText("Distribucion de Poisson");
 

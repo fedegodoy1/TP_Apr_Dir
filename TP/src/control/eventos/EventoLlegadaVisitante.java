@@ -40,7 +40,6 @@ public class EventoLlegadaVisitante extends Evento {
         double rndLote = randomObject.nextDouble();
         int lote = 0;
         lote = Distribuciones.calcular_poisson(config.getMediaLote(), rndLote);
-        //newAsignacionLote.setRnd(rndLote);
         newAsignacionLote.setLoteVisitantes(lote);
 
         actual.setLote(newAsignacionLote);
@@ -48,9 +47,6 @@ public class EventoLlegadaVisitante extends Evento {
         for (int i = 0; i < lote; i++) {
             newLoteVisitantes.add(new Visitantes());
         }
-
-        
-
         double rndFinRecorrido = 0.0;
         double tRecorrido = 0.0;
         double finRecorrido = 0.0;

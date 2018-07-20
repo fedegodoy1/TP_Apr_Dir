@@ -14,7 +14,7 @@ import objects.Sala;
 import objects.Visitantes;
 
 public class EventoFinRecorridoSalaB extends Evento {
-    
+
     public EventoFinRecorridoSalaB(String nombre) {
         super(nombre);
     }
@@ -34,8 +34,6 @@ public class EventoFinRecorridoSalaB extends Evento {
         actual.setLote(anterior.getAsignacionLote());
 
         FinRecorridoSalaB finRecorridoSalaB = new FinRecorridoSalaB();
-        double rndFinRecorridoB1 = 0.0;
-        double rndFinRecorridoB2 = 0.0;
         double tRecorridoB = 0.0;
 
         double rndFinRecorridoD = 0.0;
@@ -49,22 +47,22 @@ public class EventoFinRecorridoSalaB extends Evento {
                 break;
             }
         }
-        
+
         // Ahora calcula para el visitante que termino de recorrer antes de el, la prox sala si o si sera D
         if (actual.getSalas().get(3).getCapacidad() < 100) {
 
             rndFinRecorridoD = randomObject.nextDouble();
-            tRecorridoD = Distribuciones.calcular_uniforme(config.getDesdeFinRecorridoSalaC(),
+            tRecorridoD = Distribuciones.calcular_uniforme(config.getDesdeFinRecorridoSalaD(),
                     config.getHastaFinRecorridoSalaD(),
                     rndFinRecorridoD);
             FinRecorridoSalaD newFinRecorridoD = new FinRecorridoSalaD(rndFinRecorridoD, tRecorridoD, tRecorridoD + horaActual);
 
             visitanteTerminoDeRecorrerSalaB.setFinRecorridoD(newFinRecorridoD);
             visitanteTerminoDeRecorrerSalaB.setFinRecorridoB(new FinRecorridoSalaB(
-                        visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getRnd1(),
-                        visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getRnd2(),
-                        visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getSenocoseno()));
-            
+                    visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getRnd1(),
+                    visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getRnd2(),
+                    visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getSenocoseno()));
+
             actual.getSalas().get(3).setCapacidad(anterior.getSalas().get(3).getCapacidad() + 1);
             actual.getSalas().get(3).setEstado(Sala.Estado.CON_VISITANTES);
         } else {
@@ -86,37 +84,21 @@ public class EventoFinRecorridoSalaB extends Evento {
             }
 
             visitanteQueRecorreSalaB.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_B);
+            if (actual.getSalas().get(2).getSenocosenoSalaB().equals("")) {
+                actual.getSalas().get(2).setRnd1SalaB(randomObject.nextDouble());
+                actual.getSalas().get(2).setRnd2SalaB(randomObject.nextDouble());
+                actual.getSalas().get(2).setSenocosenoSalaB(COS);
 
-            if (COS.equals(visitanteQueRecorreSalaB.getFinRecorridoB().getSenocoseno())) {
-                visitanteQueRecorreSalaB.getFinRecorridoB().setSenocoseno(SENO);
-                tRecorridoB = Distribuciones.calcular_normal(config.getMediaFinRecorridoSalaA(),
-                        config.getDesviacionFinRecorridoSalaA(),
-                        visitanteQueRecorreSalaB.getFinRecorridoB().getRnd1(),
-                        visitanteQueRecorreSalaB.getFinRecorridoB().getRnd2(),
-                        visitanteQueRecorreSalaB.getFinRecorridoB().getSenocoseno());
-                finRecorridoSalaB.setRnd1(visitanteQueRecorreSalaB.getFinRecorridoB().getRnd1());
-                finRecorridoSalaB.setRnd2(visitanteQueRecorreSalaB.getFinRecorridoB().getRnd2());
-                finRecorridoSalaB.settRecorrido(tRecorridoB);
-                finRecorridoSalaB.setFinRecorrido(tRecorridoB + horaActual);
-                
-                visitanteQueRecorreSalaB.setFinRecorridoA(new FinRecorridoSalaA(
-                        visitanteQueRecorreSalaB.getFinRecorridoA().getRnd1(),
-                        visitanteQueRecorreSalaB.getFinRecorridoA().getRnd2(),
-                        visitanteQueRecorreSalaB.getFinRecorridoA().getSenocoseno()));
-                visitanteQueRecorreSalaB.setFinRecorridoB(finRecorridoSalaB);
-
-            } else {
-
-                rndFinRecorridoB1 = randomObject.nextDouble();
-                rndFinRecorridoB2 = randomObject.nextDouble();
                 visitanteQueRecorreSalaB.getFinRecorridoB().setSenocoseno(COS);
+                finRecorridoSalaB.setRnd1(actual.getSalas().get(2).getRnd1SalaB());
+                finRecorridoSalaB.setRnd2(actual.getSalas().get(2).getRnd2SalaB());
+
                 tRecorridoB = Distribuciones.calcular_normal(config.getMediaFinRecorridoSalaA(),
                         config.getDesviacionFinRecorridoSalaA(),
-                        rndFinRecorridoB1,
-                        rndFinRecorridoB2,
+                        actual.getSalas().get(2).getRnd1SalaB(),
+                        actual.getSalas().get(2).getRnd2SalaB(),
                         visitanteQueRecorreSalaB.getFinRecorridoB().getSenocoseno());
-                finRecorridoSalaB.setRnd1(rndFinRecorridoB1);
-                finRecorridoSalaB.setRnd2(rndFinRecorridoB2);
+
                 finRecorridoSalaB.settRecorrido(tRecorridoB);
                 finRecorridoSalaB.setFinRecorrido(tRecorridoB + horaActual);
 
@@ -125,7 +107,56 @@ public class EventoFinRecorridoSalaB extends Evento {
                         visitanteQueRecorreSalaB.getFinRecorridoA().getRnd2(),
                         visitanteQueRecorreSalaB.getFinRecorridoA().getSenocoseno()));
                 visitanteQueRecorreSalaB.setFinRecorridoB(finRecorridoSalaB);
+            } else {
+                if (COS.equals(actual.getSalas().get(2).getSenocosenoSalaB())) {
 
+                    actual.getSalas().get(2).setSenocosenoSalaB(SENO);
+                    visitanteQueRecorreSalaB.getFinRecorridoB().setSenocoseno(SENO);
+
+                    finRecorridoSalaB.setRnd1(actual.getSalas().get(2).getRnd1SalaB());
+                    finRecorridoSalaB.setRnd2(actual.getSalas().get(2).getRnd2SalaB());
+
+                    tRecorridoB = Distribuciones.calcular_normal(config.getMediaFinRecorridoSalaA(),
+                            config.getDesviacionFinRecorridoSalaA(),
+                            visitanteQueRecorreSalaB.getFinRecorridoB().getRnd1(),
+                            visitanteQueRecorreSalaB.getFinRecorridoB().getRnd2(),
+                            visitanteQueRecorreSalaB.getFinRecorridoB().getSenocoseno());
+
+                    finRecorridoSalaB.settRecorrido(tRecorridoB);
+                    finRecorridoSalaB.setFinRecorrido(tRecorridoB + horaActual);
+
+                    visitanteQueRecorreSalaB.setFinRecorridoA(new FinRecorridoSalaA(
+                            visitanteQueRecorreSalaB.getFinRecorridoA().getRnd1(),
+                            visitanteQueRecorreSalaB.getFinRecorridoA().getRnd2(),
+                            visitanteQueRecorreSalaB.getFinRecorridoA().getSenocoseno()));
+                    visitanteQueRecorreSalaB.setFinRecorridoB(finRecorridoSalaB);
+
+                } else {
+
+                    actual.getSalas().get(2).setRnd1SalaB(randomObject.nextDouble());
+                    actual.getSalas().get(2).setRnd2SalaB(randomObject.nextDouble());
+                    actual.getSalas().get(2).setSenocosenoSalaB(COS);
+
+                    visitanteQueRecorreSalaB.getFinRecorridoB().setSenocoseno(COS);
+                    finRecorridoSalaB.setRnd1(actual.getSalas().get(2).getRnd1SalaB());
+                    finRecorridoSalaB.setRnd2(actual.getSalas().get(2).getRnd2SalaB());
+
+                    tRecorridoB = Distribuciones.calcular_normal(config.getMediaFinRecorridoSalaA(),
+                            config.getDesviacionFinRecorridoSalaA(),
+                            actual.getSalas().get(2).getRnd1SalaB(),
+                            actual.getSalas().get(2).getRnd2SalaB(),
+                            visitanteQueRecorreSalaB.getFinRecorridoB().getSenocoseno());
+
+                    finRecorridoSalaB.settRecorrido(tRecorridoB);
+                    finRecorridoSalaB.setFinRecorrido(tRecorridoB + horaActual);
+
+                    visitanteQueRecorreSalaB.setFinRecorridoA(new FinRecorridoSalaA(
+                            visitanteQueRecorreSalaB.getFinRecorridoA().getRnd1(),
+                            visitanteQueRecorreSalaB.getFinRecorridoA().getRnd2(),
+                            visitanteQueRecorreSalaB.getFinRecorridoA().getSenocoseno()));
+                    visitanteQueRecorreSalaB.setFinRecorridoB(finRecorridoSalaB);
+
+                }
             }
 
             actual.getSalas().get(2).disminuirCola();
