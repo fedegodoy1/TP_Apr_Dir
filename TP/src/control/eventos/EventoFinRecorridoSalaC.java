@@ -132,6 +132,7 @@ public class EventoFinRecorridoSalaC extends Evento {
 
             } else {
                 visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_A);
+                visitanteTerminoDeRecorrer.setFinRecorridoC(new FinRecorridoSalaC());
                 actual.getSalas().get(1).agregarVisitanteALaCola();
             }
         }
@@ -158,6 +159,7 @@ public class EventoFinRecorridoSalaC extends Evento {
                 }
             } else {
                 visitanteTerminoDeRecorrer.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_D);
+                visitanteTerminoDeRecorrer.setFinRecorridoC(new FinRecorridoSalaC());
                 actual.getSalas().get(3).agregarVisitanteALaCola();
             }
         }
@@ -198,6 +200,8 @@ public class EventoFinRecorridoSalaC extends Evento {
 
         } else if (actual.getSalas().get(0).getCola() == 0 && actual.getSalas().get(0).getCapacidad() == 0) {
             actual.getSalas().get(0).setEstado(Sala.Estado.VACIA);
+        } else {
+            actual.getSalas().get(0).setEstado(Sala.Estado.CON_VISITANTES);
         }
 
     }

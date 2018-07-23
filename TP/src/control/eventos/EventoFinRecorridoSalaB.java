@@ -62,11 +62,17 @@ public class EventoFinRecorridoSalaB extends Evento {
                     visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getRnd1(),
                     visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getRnd2(),
                     visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getSenocoseno()));
+            visitanteTerminoDeRecorrerSalaB.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_D);
+            visitanteTerminoDeRecorrerSalaB.setSala("D");
 
             actual.getSalas().get(3).aumentarCapacidad();
             actual.getSalas().get(3).setEstado(Sala.Estado.CON_VISITANTES);
         } else {
             visitanteTerminoDeRecorrerSalaB.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_D);
+            visitanteTerminoDeRecorrerSalaB.setFinRecorridoB(new FinRecorridoSalaB(
+                    visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getRnd1(),
+                    visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getRnd2(),
+                    visitanteTerminoDeRecorrerSalaB.getFinRecorridoA().getSenocoseno()));
             actual.getSalas().get(3).agregarVisitanteALaCola();
         }
         actual.getSalas().get(2).disminuirCapacidad();
@@ -84,6 +90,7 @@ public class EventoFinRecorridoSalaB extends Evento {
             }
 
             visitanteQueRecorreSalaB.setEstado(Visitantes.Estado.HACIENDO_RECORRIDO_B);
+            visitanteQueRecorreSalaB.setSala("B");
             if (actual.getSalas().get(2).getSenocosenoSalaB().equals("")) {
                 actual.getSalas().get(2).setRnd1SalaB(randomObject.nextDouble());
                 actual.getSalas().get(2).setRnd2SalaB(randomObject.nextDouble());

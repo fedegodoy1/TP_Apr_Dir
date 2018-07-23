@@ -38,9 +38,8 @@ public class EventoLlegadaVisitante extends Evento {
         AsignacionRecorrido newAsignacionRecorrido = new AsignacionRecorrido();
         List<Visitantes> newLoteVisitantes = new ArrayList();
 
-        double rndLote = randomObject.nextDouble();
         int lote = 0;
-        lote = Distribuciones.calcular_poisson(config.getMediaLote(), rndLote);
+        lote = Distribuciones.calcular_poisson(config.getMediaLote());
         newAsignacionLote.setLoteVisitantes(lote);
 
         actual.setLote(newAsignacionLote);
@@ -107,6 +106,7 @@ public class EventoLlegadaVisitante extends Evento {
             } else {
                 
                 newVisitante.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_C);
+                actual.getVisitantes().add(newVisitante);
                 actual.getSalas().get(0).agregarVisitanteALaCola();
                 
             }

@@ -536,12 +536,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel32)
-                    .addComponent(txt_acum_visitantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel33)
-                        .addComponent(txt_max_gente_cola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_max_gente_cola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel32)
+                        .addComponent(txt_acum_visitantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -907,7 +908,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         conf.setDesdeFinRecorridoSalaD(desdeSalaD);
         conf.setHastaFinRecorridoSalaD(hastaSalaD);
         conf.setDesdeFinRecorridoSalaC(desdeSalaC);
-        conf.setHastaFinRecorridoSalaD(hastaSalaC);
+        conf.setHastaFinRecorridoSalaC(hastaSalaC);
         conf.setMediaFinRecorridoSalaA(mediaSalaA);
         conf.setDesviacionFinRecorridoSalaA(desviacionSalaA);
         conf.setMediaFinRecorridoSalaB(mediaSalaB);

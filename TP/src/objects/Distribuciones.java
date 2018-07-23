@@ -44,7 +44,7 @@ public class Distribuciones {
         return (media * -1) * Math.log(1 - rnd);
     }
 
-    public static int calcular_poisson(double media, double rnd) {
+    public static int calcular_poisson(double media) {
         double p = 0; 
         Random randomObject = new Random();
         int x = 0;

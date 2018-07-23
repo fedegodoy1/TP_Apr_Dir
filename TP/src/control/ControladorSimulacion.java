@@ -41,7 +41,7 @@ public class ControladorSimulacion {
         int iteracionesMostrando = 0;
         inicializar();
 
-        int minutosASimular = Configuracion.getConfiguracion().getMinutosASimular();
+        double minutosASimular = new Double(Configuracion.getConfiguracion().getMinutosASimular());
 
         while (iteracionActual < 1000000 && anterior.getReloj() < minutosASimular) {
             //Mover vector "actual" a "anterior"
@@ -96,6 +96,7 @@ public class ControladorSimulacion {
         }
 
         if (anterior.getVisitantes() != null && anterior.getVisitantes().size() > 0) {
+            
             for(Visitantes visitante : anterior.getVisitantes()) {
                 if(visitante.getFinRecorridoC().getFinRecorrido() > 0 &&
                         visitante.getFinRecorridoC().getFinRecorrido() < Double.MAX_VALUE) {

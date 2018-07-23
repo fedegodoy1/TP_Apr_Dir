@@ -141,6 +141,10 @@ public class EventoFinRecorridoSalaA extends Evento {
 
             } else {
                 visitanteTerminoDeRecorrerSalaA.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_B);
+                visitanteTerminoDeRecorrerSalaA.setFinRecorridoA(new FinRecorridoSalaA(
+                        visitanteTerminoDeRecorrerSalaA.getFinRecorridoA().getRnd1(),
+                        visitanteTerminoDeRecorrerSalaA.getFinRecorridoA().getRnd2(),
+                        visitanteTerminoDeRecorrerSalaA.getFinRecorridoA().getSenocoseno()));
                 actual.getSalas().get(2).agregarVisitanteALaCola();
             }
         } else if (visitanteTerminoDeRecorrerSalaA.getRecorrido().get(2).getNombre().equals("D")) {
@@ -169,6 +173,10 @@ public class EventoFinRecorridoSalaA extends Evento {
                 }
             } else {
                 visitanteTerminoDeRecorrerSalaA.setEstado(Visitantes.Estado.ESPERANDO_RECORRIDO_D);
+                visitanteTerminoDeRecorrerSalaA.setFinRecorridoA(new FinRecorridoSalaA(
+                        visitanteTerminoDeRecorrerSalaA.getFinRecorridoA().getRnd1(),
+                        visitanteTerminoDeRecorrerSalaA.getFinRecorridoA().getRnd2(),
+                        visitanteTerminoDeRecorrerSalaA.getFinRecorridoA().getSenocoseno()));
                 actual.getSalas().get(3).agregarVisitanteALaCola();
             }
         }

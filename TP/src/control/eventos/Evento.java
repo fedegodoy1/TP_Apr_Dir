@@ -41,10 +41,10 @@ public abstract class Evento {
     public abstract void actualizarEstadoVector();
     
     public static List<Visitantes> clonarVisitantes(List<Visitantes> listaAClonar) {
-        return listaAClonar.stream().parallel().map(visitante -> new Visitantes(visitante)).collect(Collectors.toList());
+        return listaAClonar.stream().map(visitante -> new Visitantes(visitante)).collect(Collectors.toList());
     }
     
     public static List<Sala> clonarSalas(List<Sala> listaAClonar) {
-        return listaAClonar.stream().parallel().map(sala -> new Sala(sala)).collect(Collectors.toList());
+        return listaAClonar.stream().map(sala -> new Sala(sala)).collect(Collectors.toList());
     }
 }
