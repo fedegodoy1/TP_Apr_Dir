@@ -26,11 +26,11 @@ public class ControladorSimulacion {
         vistaAplicacion = new VentanaPrincipal(this);
         estadisticas = new Estadisticas();
     }
-    
+
     public Estadisticas mostrarEstadisticas() {
         return estadisticas;
     }
-    
+
     public void mostrarVentanaPrincipal() {
         vistaAplicacion.setVisible(true);
     }
@@ -40,10 +40,13 @@ public class ControladorSimulacion {
         int iteracionActual = 0;
         int iteracionesMostrando = 0;
         inicializar();
+        
 
         double minutosASimular = new Double(Configuracion.getConfiguracion().getMinutosASimular());
-
-        while (iteracionActual < 1000000 && anterior.getReloj() < minutosASimular) {
+        if(Configuracion.getConfiguracion().getMinutoDesde() == 0) {
+            iteracionesMostrando++;
+        }        
+        do {
             //Mover vector "actual" a "anterior"
             rotacionVector();
             Evento nuevoEvento = determinarProximoEvento();
@@ -51,22 +54,22 @@ public class ControladorSimulacion {
             actual.setReloj(nuevoEvento.getHoraEvento());
             actual.setEvento(nuevoEvento);
             actual.getEvento().actualizarEstadoVector();
-            
-            if (seMuestra(iteracionesMostrando))
-            {
+
+            if (seMuestra(iteracionesMostrando)) {
                 //Guardar en la lista a devolver
                 guardarVectorParaVista();
                 iteracionesMostrando++;
             }
             iteracionActual++;
-        }
-        
+        } while (iteracionActual < 1000000 && anterior.getReloj() < minutosASimular); 
+ 
         //Actualizar Vista
         obtenerEstadisticas();
+        guardarUltimo(actual);
         vistaAplicacion.setearModelo(modelo);
         modelo = new ArrayList<>();
     }
-    
+
     private void obtenerEstadisticas() {
         estadisticas.setMaxCantVisitantesEnCola(actual.getMaxVisitantesEnEntrada());
         estadisticas.setAcumVisitantesEnSistema(actual.getAcumuladorVisitantes());
@@ -96,33 +99,33 @@ public class ControladorSimulacion {
         }
 
         if (anterior.getVisitantes() != null && anterior.getVisitantes().size() > 0) {
-            
-            for(Visitantes visitante : anterior.getVisitantes()) {
-                if(visitante.getFinRecorridoC().getFinRecorrido() > 0 &&
-                        visitante.getFinRecorridoC().getFinRecorrido() < Double.MAX_VALUE) {
+
+            for (Visitantes visitante : anterior.getVisitantes()) {
+                if (visitante.getFinRecorridoC().getFinRecorrido() > 0
+                        && visitante.getFinRecorridoC().getFinRecorrido() < Double.MAX_VALUE) {
                     mapaDeTiempos.put(visitante.getFinRecorridoC().getFinRecorrido(), Evento.FinRecorridoSalaC);
                 }
-                if(visitante.getFinRecorridoA().getFinRecorrido() > 0 &&
-                        visitante.getFinRecorridoA().getFinRecorrido() < Double.MAX_VALUE) {
+                if (visitante.getFinRecorridoA().getFinRecorrido() > 0
+                        && visitante.getFinRecorridoA().getFinRecorrido() < Double.MAX_VALUE) {
                     mapaDeTiempos.put(visitante.getFinRecorridoA().getFinRecorrido(), Evento.FinRecorridoSalaA);
                 }
-                if(visitante.getFinRecorridoB().getFinRecorrido() > 0 &&
-                        visitante.getFinRecorridoB().getFinRecorrido() < Double.MAX_VALUE) {
+                if (visitante.getFinRecorridoB().getFinRecorrido() > 0
+                        && visitante.getFinRecorridoB().getFinRecorrido() < Double.MAX_VALUE) {
                     mapaDeTiempos.put(visitante.getFinRecorridoB().getFinRecorrido(), Evento.FinRecorridoSalaB);
                 }
-                if(visitante.getFinRecorridoD().getFinRecorrido() > 0 &&
-                        visitante.getFinRecorridoD().getFinRecorrido() < Double.MAX_VALUE) {
+                if (visitante.getFinRecorridoD().getFinRecorrido() > 0
+                        && visitante.getFinRecorridoD().getFinRecorrido() < Double.MAX_VALUE) {
                     mapaDeTiempos.put(visitante.getFinRecorridoD().getFinRecorrido(), Evento.FinRecorridoSalaD);
                 }
             }
         }
-        
+
         Set<Double> tiempos = mapaDeTiempos.keySet();
         Double tiempoSiguiente = Collections.min(tiempos);
-        
+
         Evento returnValue = mapaDeTiempos.get(tiempoSiguiente);
         returnValue.setHoraEvento(tiempoSiguiente);
-        
+
         return returnValue;
     }
 
@@ -143,7 +146,7 @@ public class ControladorSimulacion {
 
         }
         if (seMuestra) {
-            seMuestra = seMuestra && iteracionActual <= Configuracion.getConfiguracion().getIteracionesAMostrar();
+            seMuestra = seMuestra && iteracionActual < Configuracion.getConfiguracion().getIteracionesAMostrar();
         }
         return seMuestra;
     }
@@ -160,5 +163,9 @@ public class ControladorSimulacion {
 
         modelo.add(actual);
 
+    }
+    
+    private void guardarUltimo(VectorEstado actual) {
+        modelo.add(actual);
     }
 }
